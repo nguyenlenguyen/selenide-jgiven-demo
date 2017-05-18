@@ -8,6 +8,12 @@
     <artifactId>selenide-jgiven-demo</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <suiteName>SmokeTestDesktop</suiteName>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
@@ -17,6 +23,26 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
+                <configuration>
+                    <systemPropertyVariables>
+                        <siteUrl>http://us.web-newsstand-dev.xen.int</siteUrl>
+                        <apiHost>http://www-itg.zenith.int</apiHost>
+                        <browser>chrome</browser>
+                        <device>iPhone</device>
+                        <orientation>portrait</orientation>
+                        <screenshot>true</screenshot>
+                        <slack>false</slack>
+                        <testrail>true</testrail>
+                    </systemPropertyVariables>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>${project.build.testSourceDirectory}/testSuites/${suiteName}.xml</suiteXmlFile>
+                    </suiteXmlFiles>
                 </configuration>
             </plugin>
         </plugins>

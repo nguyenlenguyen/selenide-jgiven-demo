@@ -1,19 +1,19 @@
 package testCases.Tests;
 
 import core.BaseAssert;
-import core.Browser;
-import core.DriverManager;
 import core.ExecutionRetry;
 import org.testng.ITestContext;
 import org.testng.ITestNGMethod;
 import org.testng.ITestResult;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 import utilities.ReportUtils;
 
 import java.lang.reflect.Method;
 
 public class BaseTest {
-    protected String[] publicationList = {};
 
     @BeforeSuite(alwaysRun = true)
     protected void createReport(ITestContext iTestContext) {
@@ -30,10 +30,8 @@ public class BaseTest {
     }
 
     @BeforeMethod(alwaysRun = true)
-    @Parameters({"browser", "device", "orientation"})
-    protected void beforeMethod(String browser, String device, String orientation, Method method) {
+    protected void beforeMethod(Method method) {
         try {
-            DriverManager.initDriver(browser, null, device, orientation);
             ReportUtils.startExtentTest(method.getName(), method.getDeclaringClass().getName());
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -42,8 +40,6 @@ public class BaseTest {
 
     @AfterMethod(alwaysRun = true)
     protected void afterMethod(ITestResult iTestResult) {
-        Browser.clearLocalStorage();
-        DriverManager.getDriver().quit();
         ReportUtils.endExtentTest(iTestResult);
         BaseAssert.collectAsserts();
     }

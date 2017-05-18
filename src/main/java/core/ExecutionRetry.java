@@ -13,7 +13,6 @@ public class ExecutionRetry implements IRetryAnalyzer {
             return false;
         ReportUtils.enableLog();
         ReportUtils.logAll("This test is failed. Retrying it.");
-        Browser.clearLocalStorage();
         retryCount--;
         return true;
     }
